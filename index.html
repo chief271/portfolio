@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mohamed — Shopify & Java Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #12213B;
+    --paper: #EFEDE6;
+    --paper-dim: #E4E1D6;
+    --amber: #C98A3E;
+    --teal: #3E6259;
+    --white: #FBFAF6;
+    --text-dim: #5A6478;
+    --display: 'Space Grotesk', sans-serif;
+    --body: 'Source Serif 4', serif;
+    --mono: 'IBM Plex Mono', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--body);
+    font-size: 17px;
+    line-height: 1.6;
+  }
+
+  a { color: inherit; text-decoration: none; }
+
+  .wrap {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 28px;
+  }
+
+  /* ---------- NAV ---------- */
+  nav {
+    position: sticky;
+    top: 0;
+    background: var(--paper);
+    border-bottom: 1px solid rgba(18,33,59,0.12);
+    z-index: 10;
+  }
+  nav .wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 28px;
+  }
+  .nav-name {
+    font-family: var(--mono);
+    font-size: 14px;
+    letter-spacing: 0.02em;
+  }
+  .nav-links {
+    display: flex;
+    gap: 24px;
+    font-family: var(--mono);
+    font-size: 13px;
+  }
+  .nav-links a { opacity: 0.7; transition: opacity 0.2s; }
+  .nav-links a:hover { opacity: 1; }
+
+  /* ---------- HERO ---------- */
+  header.hero {
+    padding: 100px 0 80px;
+    border-bottom: 1px solid rgba(18,33,59,0.12);
+    background:
+      repeating-linear-gradient(
+        to right,
+        rgba(18,33,59,0.045) 0px,
+        rgba(18,33,59,0.045) 1px,
+        transparent 1px,
+        transparent 80px
+      );
+  }
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--text-dim);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 18px;
+  }
+  h1 {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: clamp(36px, 6vw, 58px);
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    max-width: 720px;
+  }
+  h1 .accent-a { color: var(--amber); }
+  h1 .accent-b { color: var(--teal); }
+  .hero-sub {
+    margin-top: 24px;
+    max-width: 560px;
+    font-size: 19px;
+    color: var(--text-dim);
+  }
+  .hero-links {
+    margin-top: 36px;
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .btn {
+    font-family: var(--mono);
+    font-size: 13px;
+    padding: 12px 20px;
+    border: 1.5px solid var(--ink);
+    border-radius: 2px;
+    transition: background 0.2s, color 0.2s;
+  }
+  .btn:hover { background: var(--ink); color: var(--white); }
+  .btn.ghost { border-color: rgba(18,33,59,0.3); }
+  .btn.ghost:hover { background: transparent; color: var(--ink); border-color: var(--ink); }
+
+  /* ---------- SECTION HEADERS ---------- */
+  section { padding: 70px 0; }
+  section:not(:last-of-type) { border-bottom: 1px solid rgba(18,33,59,0.12); }
+  .section-label {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--text-dim);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  h2 {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 30px;
+    margin-bottom: 36px;
+  }
+
+  /* ---------- SKILLS ---------- */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+  }
+  .skill-group h3 {
+    font-family: var(--mono);
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--text-dim);
+    margin-bottom: 14px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid;
+  }
+  .skill-group.commerce h3 { border-color: var(--amber); }
+  .skill-group.backend h3 { border-color: var(--teal); }
+  .skill-group.frontend h3 { border-color: var(--ink); }
+  .skill-group ul { list-style: none; font-size: 15px; }
+  .skill-group li { margin-bottom: 6px; }
+
+  /* ---------- FILTER / LEGEND ---------- */
+  .legend {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 36px;
+  }
+  .pill {
+    font-family: var(--mono);
+    font-size: 13px;
+    padding: 8px 16px;
+    border-radius: 999px;
+    border: 1.5px solid rgba(18,33,59,0.25);
+    cursor: pointer;
+    background: transparent;
+    color: var(--ink);
+    transition: all 0.2s;
+  }
+  .pill[data-track="shopify"].active {
+    background: var(--amber);
+    border-color: var(--amber);
+    color: var(--white);
+  }
+  .pill[data-track="java"].active {
+    background: var(--teal);
+    border-color: var(--teal);
+    color: var(--white);
+  }
+  .pill[data-track="all"].active {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: var(--white);
+  }
+
+  /* ---------- PROJECT CARDS ---------- */
+  .project {
+    padding: 28px 0;
+    border-top: 1px solid rgba(18,33,59,0.12);
+    display: grid;
+    grid-template-columns: 130px 1fr;
+    gap: 24px;
+  }
+  .project:first-of-type { border-top: none; }
+  .tag {
+    font-family: var(--mono);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    height: fit-content;
+    padding: 5px 10px;
+    border-radius: 3px;
+    white-space: nowrap;
+  }
+  .tag.shopify { background: rgba(201,138,62,0.15); color: var(--amber); }
+  .tag.java { background: rgba(62,98,89,0.15); color: var(--teal); }
+  .project h3 {
+    font-family: var(--display);
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .project .desc { color: var(--text-dim); font-size: 15px; margin-bottom: 10px; }
+  .project .stack {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--text-dim);
+  }
+  .honesty-note {
+    display: inline-block;
+    margin-top: 10px;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--teal);
+    background: rgba(62,98,89,0.1);
+    padding: 4px 10px;
+    border-radius: 3px;
+  }
+  .preview-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 10px;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--amber);
+    background: rgba(201,138,62,0.1);
+    padding: 6px 10px;
+    border-radius: 3px;
+    width: fit-content;
+    flex-wrap: wrap;
+  }
+  .preview-link a { text-decoration: underline; }
+  .preview-link .pw { color: var(--text-dim); }
+
+  /* ---------- ABOUT ---------- */
+  .about-text { max-width: 640px; font-size: 17px; color: var(--ink); }
+  .about-text p { margin-bottom: 16px; }
+
+  /* ---------- CONTACT ---------- */
+  footer {
+    padding: 70px 0 50px;
+    background: var(--ink);
+    color: var(--paper);
+  }
+  footer h2 { color: var(--white); }
+  footer .section-label { color: rgba(239,237,230,0.6); }
+  footer .contact-links {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-top: 8px;
+  }
+  footer .btn { border-color: rgba(251,250,246,0.4); color: var(--paper); }
+  footer .btn:hover { background: var(--paper); color: var(--ink); }
+
+  @media (max-width: 640px) {
+    .skills-grid { grid-template-columns: 1fr; }
+    .project { grid-template-columns: 1fr; gap: 10px; }
+    header.hero { padding: 70px 0 60px; }
+  }
+
+  :focus-visible { outline: 2px solid var(--amber); outline-offset: 2px; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="nav-name">MOHAMED / DEV</div>
+    <div class="nav-links">
+      <a href="#work">Work</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Developer — M1 Computer Science</div>
+    <h1>I build <span class="accent-a">Shopify stores</span> that convert and <span class="accent-b">Java systems</span> that hold up.</h1>
+    <p class="hero-sub">Currently taking on Shopify homepage &amp; section builds, and learning Spring Boot backend development through real projects — shown honestly below, not oversold.</p>
+    <div class="hero-links">
+      <a class="btn" href="#work">See the work</a>
+      <a class="btn ghost" href="#contact">Get in touch</a>
+    </div>
+  </div>
+</header>
+
+<section id="skills">
+  <div class="wrap">
+    <div class="section-label">What I work with</div>
+    <h2>Skills</h2>
+    <div class="skills-grid">
+      <div class="skill-group commerce">
+        <h3>E-Commerce</h3>
+        <ul>
+          <li>Shopify Liquid</li>
+          <li>Online Store 2.0</li>
+          <li>AJAX Cart API</li>
+          <li>Theme sections &amp; blocks</li>
+        </ul>
+      </div>
+      <div class="skill-group backend">
+        <h3>Backend</h3>
+        <ul>
+          <li>Java</li>
+          <li>Spring Boot</li>
+          <li>PostgreSQL / Supabase</li>
+          <li>Mockito / JUnit testing</li>
+        </ul>
+      </div>
+      <div class="skill-group frontend">
+        <h3>Frontend</h3>
+        <ul>
+          <li>JavaScript</li>
+          <li>React (in progress)</li>
+          <li>Responsive / mobile-first design</li>
+          <li>Thymeleaf</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="work">
+  <div class="wrap">
+    <div class="section-label">Selected work</div>
+    <h2>Projects</h2>
+
+    <div class="legend">
+      <button class="pill active" data-track="all">All</button>
+      <button class="pill" data-track="shopify">Shopify</button>
+      <button class="pill" data-track="java">Java / Backend</button>
+    </div>
+
+    <div id="project-list">
+
+      <div class="project" data-track="shopify">
+        <span class="tag shopify">Shopify</span>
+        <div>
+          <h3>Shoppable Hero with Interactive Hotspots</h3>
+          <p class="desc">A full-width hero image with clickable glow-point hotspots — clicking one reveals the featured product without leaving the section, turning the hero into a discovery tool instead of a static banner.</p>
+          <div class="stack">Liquid · custom CSS animation · vanilla JS</div>
+          <div class="preview-link">🔒 <a href="https://your-store-url.myshopify.com" target="_blank">View live store</a> <span class="pw">— password: yourpassword</span></div>
+        </div>
+      </div>
+
+      <div class="project" data-track="shopify">
+        <span class="tag shopify">Shopify</span>
+        <div>
+          <h3>"Shop the Look" Section</h3>
+          <p class="desc">A styled lifestyle image with clickable dots that reveal the matching product's title, price, and variants inline — lets merchants build editorial-style merchandising without touching code after setup.</p>
+          <div class="stack">Liquid dynamic blocks · JS panel interaction</div>
+          <div class="preview-link">🔒 <a href="https://your-store-url.myshopify.com" target="_blank">View live store</a> <span class="pw">— password: yourpassword</span></div>
+        </div>
+      </div>
+
+      <div class="project" data-track="shopify">
+        <span class="tag shopify">Shopify</span>
+        <div>
+          <h3>Custom Cart Drawer + AJAX Cart Integration</h3>
+          <p class="desc">A slide-out cart drawer wired into Shopify's AJAX Cart API, with a full nav system (search overlay, nav drawer) built around it — items update without a page reload.</p>
+          <div class="stack">Liquid · Shopify AJAX Cart API · JS</div>
+          <div class="preview-link">🔒 <a href="https://your-store-url.myshopify.com" target="_blank">View live store</a> <span class="pw">— password: yourpassword</span></div>
+        </div>
+      </div>
+
+      <div class="project" data-track="java">
+        <span class="tag java">Java / Backend</span>
+        <div>
+          <h3>University Management System</h3>
+          <p class="desc">A full admin panel with CRUD for Students, Departments, Teachers, Rooms, and Courses, plus a dashboard with stats and activity feeds. Includes separate role-facing portals (Student, Teacher, department head) and an assignments/grading subsystem.</p>
+          <div class="stack">Java · Spring Boot · Thymeleaf · Supabase/PostgreSQL</div>
+          <span class="honesty-note">Built to learn Spring Boot — added Mockito unit tests and H2 integration tests along the way as a deliberate practice habit.</span>
+        </div>
+      </div>
+
+      <div class="project" data-track="java">
+        <span class="tag java">Java / Backend</span>
+        <div>
+          <h3>ThermCalc — Thermal Heat Loss Calculator</h3>
+          <p class="desc">A web app for calculating building heat loss (déperditions thermiques), built as an academic team project with an MVC architecture and an energy-themed dashboard.</p>
+          <div class="stack">Node.js · Express.js · EJS · Supabase/PostgreSQL</div>
+          <span class="honesty-note">Team project — built for a university course, not a commercial product.</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap">
+    <div class="section-label">Who I am</div>
+    <h2>About</h2>
+    <div class="about-text">
+      <p>M1 Computer Science student building Shopify stores and Java/Spring Boot systems — freelance on one side, backend fundamentals on the other.</p>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap">
+    <div class="section-label">Let's talk</div>
+    <h2>Contact</h2>
+    <p style="max-width:480px; color:rgba(239,237,230,0.85);">Looking for Shopify homepage or section work, or want to talk about the Java projects — reach out.</p>
+    <div class="contact-links">
+      <a class="btn" href="mailto:your-email@example.com">Email me</a>
+      <a class="btn" href="#" target="_blank">LinkedIn</a>
+      <a class="btn" href="#" target="_blank">Fiverr</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const pills = document.querySelectorAll('.pill');
+  const projects = document.querySelectorAll('.project');
+
+  pills.forEach(pill => {
+    pill.addEventListener('click', () => {
+      pills.forEach(p => p.classList.remove('active'));
+      pill.classList.add('active');
+      const track = pill.dataset.track;
+      projects.forEach(proj => {
+        if (track === 'all' || proj.dataset.track === track) {
+          proj.style.display = 'grid';
+        } else {
+          proj.style.display = 'none';
+        }
+      });
+    });
+  });
+</script>
+
+</body>
+</html>
