@@ -118,7 +118,13 @@
     padding: 12px 20px;
     border: 1.5px solid var(--ink);
     border-radius: 2px;
+    background: transparent;
+    color: var(--ink);
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
     transition: background 0.2s, color 0.2s;
+    display: inline-block;
   }
   .btn:hover { background: var(--ink); color: var(--white); }
   .btn.ghost { border-color: rgba(18,33,59,0.3); }
@@ -275,8 +281,81 @@
     flex-wrap: wrap;
     margin-top: 8px;
   }
-  footer .btn { border-color: rgba(251,250,246,0.4); color: var(--paper); }
+  footer .btn {
+    border-color: rgba(251,250,246,0.4);
+    color: var(--paper);
+    background: var(--ink);
+  }
   footer .btn:hover { background: var(--paper); color: var(--ink); }
+
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(18,33,59,0.6);
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal-box {
+    background: var(--paper);
+    color: var(--ink);
+    width: 90%;
+    max-width: 400px;
+    padding: 32px;
+    border-radius: 4px;
+    position: relative;
+  }
+  .modal-close {
+    position: absolute;
+    top: 14px;
+    right: 16px;
+    background: none;
+    border: none;
+    font-size: 22px;
+    cursor: pointer;
+    color: var(--ink);
+  }
+  .modal-title {
+    font-family: var(--display);
+    font-size: 20px;
+    margin-bottom: 4px;
+  }
+  .modal-sub {
+    font-size: 14px;
+    color: var(--text-dim);
+    margin-bottom: 18px;
+  }
+  #contactForm {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  #contactForm input, #contactForm textarea {
+    font-family: var(--body);
+    font-size: 15px;
+    padding: 10px 12px;
+    border: 1.5px solid rgba(18,33,59,0.25);
+    border-radius: 3px;
+    background: var(--white);
+    color: var(--ink);
+    resize: none;
+  }
+  #contactForm input:focus, #contactForm textarea:focus {
+    outline: 2px solid var(--amber);
+    outline-offset: 1px;
+  }
+  .modal-submit { width: fit-content; }
+  .modal-success, .modal-error {
+    display: none;
+    margin-top: 12px;
+    font-family: var(--mono);
+    font-size: 13px;
+  }
+  .modal-success { color: var(--teal); }
+  .modal-error { color: #A5443A; }
+  .modal-success.show, .modal-error.show { display: block; }
 
   @media (max-width: 640px) {
     .skills-grid { grid-template-columns: 1fr; }
@@ -431,9 +510,23 @@
     <h2>Contact</h2>
     <p style="max-width:480px; color:rgba(239,237,230,0.85);">Looking for Shopify homepage or section work, or want to talk about the Java projects — reach out.</p>
     <div class="contact-links">
-      <a class="btn" href="mailto:your-email@example.com">Email me</a>
-      <a class="btn" href="#" target="_blank">LinkedIn</a>
-      <a class="btn" href="#" target="_blank">Fiverr</a>
+      <button class="btn" id="openContactModal">Message me</button>
+      <a class="btn" href="https://www.fiverr.com/s/Q7lAy3p" target="_blank">Fiverr</a>
+    </div>
+
+    <div class="modal-overlay" id="contactModal">
+      <div class="modal-box">
+        <button class="modal-close" id="closeContactModal">&times;</button>
+        <h3 class="modal-title">Send me a message</h3>
+        <p class="modal-sub">I'll reply directly to your email.</p>
+        <form id="contactForm" action="https://formspree.io/f/xoeadlwr" method="POST">
+          <input type="email" name="email" placeholder="Your email" required>
+          <textarea name="message" placeholder="What are you looking for?" rows="4" required></textarea>
+          <button type="submit" class="btn modal-submit">Send</button>
+        </form>
+        <p class="modal-success" id="modalSuccess">Sent — thanks, I'll get back to you soon.</p>
+        <p class="modal-error" id="modalError">Something went wrong — try emailing directly instead.</p>
+      </div>
     </div>
   </div>
 </footer>
@@ -455,6 +548,30 @@
         }
       });
     });
+  });
+
+  const modal = document.getElementById('contactModal');
+  document.getElementById('openContactModal').addEventListener('click', () => modal.classList.add('open'));
+  document.getElementById('closeContactModal').addEventListener('click', () => modal.classList.remove('open'));
+  modal.addEventListener('click', (e) => { if (e.target === modal) modal.classList.remove('open'); });
+
+  const form = document.getElementById('contactForm');
+  const errorMsg = document.getElementById('modalError');
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    errorMsg.classList.remove('show');
+    const data = new FormData(form);
+    try {
+      const res = await fetch(form.action, { method: 'POST', body: data, headers: { 'Accept': 'application/json' } });
+      if (res.ok) {
+        form.style.display = 'none';
+        document.getElementById('modalSuccess').classList.add('show');
+      } else {
+        errorMsg.classList.add('show');
+      }
+    } catch (err) {
+      errorMsg.classList.add('show');
+    }
   });
 </script>
 
