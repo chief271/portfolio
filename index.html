@@ -169,13 +169,27 @@
   .skill-group.frontend h3 { border-color: var(--ink); }
   .skill-group ul { list-style: none; font-size: 15px; }
   .skill-group li { margin-bottom: 6px; }
-
   /* ---------- FILTER / LEGEND ---------- */
-  .legend {
-    display: flex;
-    gap: 12px;
+  .filter-wrap {
     margin-bottom: 36px;
   }
+
+  .filter-main,
+  .filter-sub {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .filter-sub {
+    margin-top: 12px;
+    padding-left: 4px;
+  }
+
+  .filter-sub.is-hidden {
+    display: none;
+  }
+
   .pill {
     font-family: var(--mono);
     font-size: 13px;
@@ -187,21 +201,50 @@
     color: var(--ink);
     transition: all 0.2s;
   }
-  .pill[data-track="shopify"].active {
+
+  .pill:hover {
+    border-color: var(--ink);
+  }
+
+  .pill[data-track="shopify"].active,
+  .pill[data-category="shopify"].active,
+   .pill[data-category="features"].active,
+   .pill[data-category="design"].active{
     background: var(--amber);
     border-color: var(--amber);
     color: var(--white);
   }
+
   .pill[data-track="java"].active {
     background: var(--teal);
     border-color: var(--teal);
     color: var(--white);
   }
-  .pill[data-track="all"].active {
+
+  .pill[data-track="all"].active,
+  .pill[data-category="all"].active {
     background: var(--ink);
     border-color: var(--ink);
     color: var(--white);
   }
+
+  .filter-label {
+    display: block;
+    width: 100%;
+    font-family: var(--mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-dim);
+    margin-bottom: 0;
+  }
+
+  .filter-sub .pill {
+    font-size: 12px;
+    padding: 7px 13px;
+    border-color: rgba(18,33,59,0.16);
+  }
+
 
   /* ---------- PROJECT CARDS ---------- */
   .project {
@@ -210,6 +253,21 @@
     display: grid;
     grid-template-columns: 130px 1fr;
     gap: 24px;
+  }
+
+  /* Shopify features are displayed as a compact 2-column grid */
+  #project-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 32px;
+  }
+
+  #project-list .project {
+    min-width: 0;
+  }
+
+  #project-list .project[data-track="java"] {
+    grid-column: 1 / -1;
   }
   .project:first-of-type { border-top: none; }
   .tag {
@@ -266,6 +324,39 @@
   /* ---------- ABOUT ---------- */
   .about-text { max-width: 640px; font-size: 17px; color: var(--ink); }
   .about-text p { margin-bottom: 16px; }
+
+  .demo-note {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 8px 12px;
+  border: 1px solid var(--amber);
+  border-radius: 4px;
+  background: rgba(201, 138, 62, 0.12);
+  color: var(--ink);
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.5;
+  animation: demoAttention 3.5s ease-in-out infinite;
+}
+
+
+@keyframes demoAttention {
+  0%, 75%, 100% {
+    transform: translateY(0);
+    box-shadow: 0 0 0 rgba(201, 138, 62, 0);
+  }
+
+  82% {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(201, 138, 62, 0.15);
+  }
+
+  89% {
+    transform: translateY(0);
+    box-shadow: 0 0 0 rgba(201, 138, 62, 0);
+  }
+}
 
   /* ---------- CONTACT ---------- */
   footer {
@@ -357,10 +448,23 @@
   .modal-error { color: #A5443A; }
   .modal-success.show, .modal-error.show { display: block; }
 
+  @media (max-width: 760px) {
+    #project-list {
+      grid-template-columns: 1fr;
+    }
+
+    #project-list .project[data-track="java"] {
+      grid-column: auto;
+    }
+  }
+
   @media (max-width: 640px) {
     .skills-grid { grid-template-columns: 1fr; }
     .project { grid-template-columns: 1fr; gap: 10px; }
     header.hero { padding: 70px 0 60px; }
+    .filter-main,
+    .filter-sub { gap: 8px; }
+    .pill { padding: 7px 12px; }
   }
 
   :focus-visible { outline: 2px solid var(--amber); outline-offset: 2px; }
@@ -432,15 +536,24 @@
     <div class="section-label">Selected work</div>
     <h2>Projects</h2>
 
-    <div class="legend">
-      <button class="pill active" data-track="all">All</button>
-      <button class="pill" data-track="shopify">Shopify</button>
-      <button class="pill" data-track="java">Java / Backend</button>
+    <div class="filter-wrap">
+      <div class="filter-main">
+        <button class="pill active" data-track="all">All</button>
+        <button class="pill" data-track="shopify">Shopify</button>
+        <button class="pill" data-track="java">Java / Backend</button>
+      </div>
+
+      <div class="filter-sub is-hidden" id="shopifyFilters">
+        <span class="filter-label">Shopify focus</span>
+        <button class="pill active" data-category="all">All Shopify</button>
+        <button class="pill" data-category="features">Features &amp; Conversion</button>
+        <button class="pill" data-category="design">Design</button>
+      </div>
     </div>
 
     <div id="project-list">
 
-      <div class="project" data-track="shopify">
+      <div class="project" data-track="shopify" data-category="design">
         <span class="tag shopify">Shopify</span>
         <div>
           <h3>Skincare Store Homepage</h3>
@@ -450,12 +563,48 @@
         </div>
       </div>
 
-      <div class="project" data-track="shopify">
+      <div class="project" data-track="shopify" data-category="features">
         <span class="tag shopify">Shopify</span>
         <div>
           <h3>"Shop the Look" Section</h3>
           <p class="desc">A styled lifestyle image with clickable dots that reveal the matching product's title, price, and variants inline — lets merchants build editorial-style merchandising without touching code after setup.</p>
           <div class="stack">Liquid dynamic blocks · JS panel interaction</div>
+          <div class="preview-link">🔒 <a href="https://dummy-sttor.myshopify.com/" target="_blank">View live store</a> <span class="pw">— password: paiffa</span></div>
+        </div>
+      </div>
+      <div class="project" data-track="shopify" data-category="features">
+        <span class="tag shopify">Shopify</span>
+        <div>
+          <h3>Sticky Add to Cart</h3>
+          <p class="desc">A persistent add-to-cart bar that appears when the main product form leaves the screen, keeping the purchase action accessible while customers browse the product page — reducing the need to scroll back to the product form.</p>
+          <div class="stack">Liquid · JavaScript · Shopify product form · Responsive UI</div>
+          <div class="preview-link">🔒 <a href="https://dummy-sttor.myshopify.com/products/simple-jacket" target="_blank">View live store</a> <span class="pw">— password: paiffa</span></div>
+        </div>
+      </div>
+      <div class="project" data-track="shopify" data-category="features">
+        <span class="tag shopify">Shopify</span>
+        <div>
+          <h3>Quick Add to Cart</h3>
+          <p class="desc">A quick-add interaction that lets shoppers add products directly from collection and product grids without opening the full product page — keeping the shopping flow faster while still handling product variants.</p>
+          <div class="stack">Liquid · JavaScript · Shopify Cart API · Variant handling</div>
+          <div class="preview-link">🔒 <a href="https://dummy-sttor.myshopify.com/" target="_blank">View live store</a> <span class="pw">— password: paiffa</span></div>
+        </div>
+      </div>
+      <div class="project" data-track="shopify" data-category="features">
+        <span class="tag shopify">Shopify</span>
+        <div>
+          <h3>Quick Add + Feedback</h3>
+          <p class="desc">A quick-add interaction that lets shoppers add products directly from collection and product grids, with immediate visual feedback confirming the item was added — keeping the shopping flow fast without forcing customers to leave the page.</p>
+          <div class="stack">Liquid · JavaScript · Shopify Cart API · UI feedback · Variant handling</div>
+          <div class="preview-link">🔒 <a href="https://dummy-sttor.myshopify.com/" target="_blank">View live store</a> <span class="pw">— password: paiffa</span></div>
+        </div>
+      </div>
+      <div class="project" data-track="shopify" data-category="features">
+        <span class="tag shopify">Shopify</span>
+        <div>
+          <h3>Recently Viewed Products</h3>
+          <p class="desc">A recently viewed products feature that automatically remembers products a shopper has browsed and displays them for quick access later —  <span class="demo-note">browse a few product pages first to see the feature populate and track your browsing activity.</span></p>
+          <div class="stack">Liquid · JavaScript · localStorage · Dynamic product rendering</div>
           <div class="preview-link">🔒 <a href="https://dummy-sttor.myshopify.com/" target="_blank">View live store</a> <span class="pw">— password: paiffa</span></div>
         </div>
       </div>
@@ -532,21 +681,48 @@
 </footer>
 
 <script>
-  const pills = document.querySelectorAll('.pill');
+
+  const trackPills = document.querySelectorAll('.filter-main .pill');
+  const categoryPills = document.querySelectorAll('.filter-sub .pill');
+  const shopifyFilters = document.getElementById('shopifyFilters');
   const projects = document.querySelectorAll('.project');
 
-  pills.forEach(pill => {
+  function showProjects(track, category = 'all') {
+    projects.forEach(proj => {
+      const trackMatch = track === 'all' || proj.dataset.track === track;
+      const categoryMatch =
+        track !== 'shopify' ||
+        category === 'all' ||
+        proj.dataset.category === category;
+
+      proj.style.display = trackMatch && categoryMatch ? 'grid' : 'none';
+    });
+  }
+
+  trackPills.forEach(pill => {
     pill.addEventListener('click', () => {
-      pills.forEach(p => p.classList.remove('active'));
+      trackPills.forEach(p => p.classList.remove('active'));
       pill.classList.add('active');
+
       const track = pill.dataset.track;
-      projects.forEach(proj => {
-        if (track === 'all' || proj.dataset.track === track) {
-          proj.style.display = 'grid';
-        } else {
-          proj.style.display = 'none';
-        }
-      });
+
+      if (track === 'shopify') {
+        shopifyFilters.classList.remove('is-hidden');
+        categoryPills.forEach(p => p.classList.remove('active'));
+        document.querySelector('[data-category="all"]').classList.add('active');
+        showProjects('shopify', 'all');
+      } else {
+        shopifyFilters.classList.add('is-hidden');
+        showProjects(track);
+      }
+    });
+  });
+
+  categoryPills.forEach(pill => {
+    pill.addEventListener('click', () => {
+      categoryPills.forEach(p => p.classList.remove('active'));
+      pill.classList.add('active');
+      showProjects('shopify', pill.dataset.category);
     });
   });
 
