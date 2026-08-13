@@ -19,6 +19,28 @@
     --display: 'Space Grotesk', sans-serif;
     --body: 'Source Serif 4', serif;
     --mono: 'IBM Plex Mono', monospace;
+
+    --border: rgba(18,33,59,0.12);
+    --border-strong: rgba(18,33,59,0.25);
+    --grid-line: rgba(18,33,59,0.045);
+    --input-bg: var(--white);
+    --modal-overlay: rgba(18,33,59,0.6);
+  }
+
+  html.dark {
+    --ink: #E8E6DF;
+    --paper: #11151C;
+    --paper-dim: #191E27;
+    --amber: #D99A4A;
+    --teal: #6F9D91;
+    --white: #F4F2EA;
+    --text-dim: #A7AFBC;
+
+    --border: rgba(232,230,223,0.12);
+    --border-strong: rgba(232,230,223,0.25);
+    --grid-line: rgba(232,230,223,0.035);
+    --input-bg: #191E27;
+    --modal-overlay: rgba(0,0,0,0.72);
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -46,7 +68,7 @@
     position: sticky;
     top: 0;
     background: var(--paper);
-    border-bottom: 1px solid rgba(18,33,59,0.12);
+    border-bottom: 1px solid var(--border);
     z-index: 10;
   }
   nav .wrap {
@@ -69,15 +91,65 @@
   .nav-links a { opacity: 0.7; transition: opacity 0.2s; }
   .nav-links a:hover { opacity: 1; }
 
+  .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .theme-toggle {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-family: var(--mono);
+    font-size: 12px;
+    padding: 7px 10px;
+    border: 1px solid var(--border-strong);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--ink);
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  }
+
+  .theme-toggle:hover {
+    background: var(--ink);
+    color: var(--paper);
+    border-color: var(--ink);
+  }
+
+  .theme-icon {
+    font-size: 15px;
+    line-height: 1;
+  }
+
+  .theme-text {
+    line-height: 1;
+  }
+
+  body,
+  nav,
+  header.hero,
+  section,
+  .btn,
+  .pill,
+  #contactForm input,
+  #contactForm textarea {
+    transition:
+      background-color 0.3s ease,
+      color 0.3s ease,
+      border-color 0.3s ease;
+  }
+
   /* ---------- HERO ---------- */
   header.hero {
     padding: 100px 0 80px;
-    border-bottom: 1px solid rgba(18,33,59,0.12);
+    border-bottom: 1px solid var(--border);
     background:
       repeating-linear-gradient(
         to right,
-        rgba(18,33,59,0.045) 0px,
-        rgba(18,33,59,0.045) 1px,
+        var(--grid-line) 0px,
+        var(--grid-line) 1px,
         transparent 1px,
         transparent 80px
       );
@@ -132,7 +204,7 @@
 
   /* ---------- SECTION HEADERS ---------- */
   section { padding: 70px 0; }
-  section:not(:last-of-type) { border-bottom: 1px solid rgba(18,33,59,0.12); }
+  section:not(:last-of-type) { border-bottom: 1px solid var(--border); }
   .section-label {
     font-family: var(--mono);
     font-size: 13px;
@@ -169,6 +241,7 @@
   .skill-group.frontend h3 { border-color: var(--ink); }
   .skill-group ul { list-style: none; font-size: 15px; }
   .skill-group li { margin-bottom: 6px; }
+
   /* ---------- FILTER / LEGEND ---------- */
   .filter-wrap {
     margin-bottom: 36px;
@@ -195,37 +268,38 @@
     font-size: 13px;
     padding: 8px 16px;
     border-radius: 999px;
-    border: 1.5px solid rgba(18,33,59,0.25);
+    border: 1.5px solid var(--border-strong);
     cursor: pointer;
     background: transparent;
     color: var(--ink);
-    transition: all 0.2s;
+    transition: all 0.2s ease;
   }
 
   .pill:hover {
     border-color: var(--ink);
   }
 
+  /* Fixed Filter Active Colors for High Contrast in both light & dark modes */
   .pill[data-track="shopify"].active,
   .pill[data-category="shopify"].active,
-   .pill[data-category="features"].active,
-   .pill[data-category="design"].active{
-    background: var(--amber);
-    border-color: var(--amber);
-    color: var(--white);
+  .pill[data-category="features"].active,
+  .pill[data-category="design"].active {
+    background: var(--amber) !important;
+    border-color: var(--amber) !important;
+    color: #FFFFFF !important;
   }
 
   .pill[data-track="java"].active {
-    background: var(--teal);
-    border-color: var(--teal);
-    color: var(--white);
+    background: var(--teal) !important;
+    border-color: var(--teal) !important;
+    color: #FFFFFF !important;
   }
 
   .pill[data-track="all"].active,
   .pill[data-category="all"].active {
-    background: var(--ink);
-    border-color: var(--ink);
-    color: var(--white);
+    background: var(--ink) !important;
+    border-color: var(--ink) !important;
+    color: var(--paper) !important;
   }
 
   .filter-label {
@@ -242,20 +316,18 @@
   .filter-sub .pill {
     font-size: 12px;
     padding: 7px 13px;
-    border-color: rgba(18,33,59,0.16);
+    border-color: var(--border);
   }
-
 
   /* ---------- PROJECT CARDS ---------- */
   .project {
     padding: 28px 0;
-    border-top: 1px solid rgba(18,33,59,0.12);
+    border-top: 1px solid var(--border);
     display: grid;
     grid-template-columns: 130px 1fr;
     gap: 24px;
   }
 
-  /* Shopify features are displayed as a compact 2-column grid */
   #project-list {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -266,10 +338,8 @@
     min-width: 0;
   }
 
-  #project-list .project[data-track="java"] {
-    grid-column: 1 / -1;
-  }
   .project:first-of-type { border-top: none; }
+  
   .tag {
     font-family: var(--mono);
     font-size: 12px;
@@ -326,46 +396,43 @@
   .about-text p { margin-bottom: 16px; }
 
   .demo-note {
-  display: inline-block;
-  margin-top: 12px;
-  padding: 8px 12px;
-  border: 1px solid var(--amber);
-  border-radius: 4px;
-  background: rgba(201, 138, 62, 0.12);
-  color: var(--ink);
-  font-family: var(--mono);
-  font-size: 12px;
-  font-weight: 500;
-  line-height: 1.5;
-  animation: demoAttention 3.5s ease-in-out infinite;
-}
-
-
-@keyframes demoAttention {
-  0%, 75%, 100% {
-    transform: translateY(0);
-    box-shadow: 0 0 0 rgba(201, 138, 62, 0);
+    display: inline-block;
+    margin-top: 12px;
+    padding: 8px 12px;
+    border: 1px solid var(--amber);
+    border-radius: 4px;
+    background: rgba(201, 138, 62, 0.12);
+    color: var(--ink);
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.5;
+    animation: demoAttention 3.5s ease-in-out infinite;
   }
 
-  82% {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(201, 138, 62, 0.15);
+  @keyframes demoAttention {
+    0%, 75%, 100% {
+      transform: translateY(0);
+      box-shadow: 0 0 0 rgba(201, 138, 62, 0);
+    }
+    82% {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(201, 138, 62, 0.15);
+    }
+    89% {
+      transform: translateY(0);
+      box-shadow: 0 0 0 rgba(201, 138, 62, 0);
+    }
   }
 
-  89% {
-    transform: translateY(0);
-    box-shadow: 0 0 0 rgba(201, 138, 62, 0);
-  }
-}
-
-  /* ---------- CONTACT ---------- */
+  /* ---------- CONTACT / FOOTER (UNAFFECTED BY DAY/NIGHT MODE) ---------- */
   footer {
     padding: 70px 0 50px;
-    background: var(--ink);
-    color: var(--paper);
+    background: #11151C !important;
+    color: #EFEDE6 !important;
   }
-  footer h2 { color: var(--white); }
-  footer .section-label { color: rgba(239,237,230,0.6); }
+  footer h2 { color: #F4F2EA !important; }
+  footer .section-label { color: rgba(239,237,230,0.6) !important; }
   footer .contact-links {
     display: flex;
     gap: 20px;
@@ -373,30 +440,34 @@
     margin-top: 8px;
   }
   footer .btn {
-    border-color: rgba(251,250,246,0.4);
-    color: var(--paper);
-    background: var(--ink);
+    border-color: rgba(251,250,246,0.4) !important;
+    color: #EFEDE6 !important;
+    background: #11151C !important;
   }
-  footer .btn:hover { background: var(--paper); color: var(--ink); }
+  footer .btn:hover { 
+    background: #EFEDE6 !important; 
+    color: #11151C !important; 
+  }
 
   .modal-overlay {
     display: none;
     position: fixed;
     inset: 0;
-    background: rgba(18,33,59,0.6);
+    background: rgba(0, 0, 0, 0.72);
     z-index: 100;
     align-items: center;
     justify-content: center;
   }
   .modal-overlay.open { display: flex; }
   .modal-box {
-    background: var(--paper);
-    color: var(--ink);
+    background: #191E27;
+    color: #E8E6DF;
     width: 90%;
     max-width: 400px;
     padding: 32px;
     border-radius: 4px;
     position: relative;
+    border: 1px solid rgba(232,230,223,0.15);
   }
   .modal-close {
     position: absolute;
@@ -406,16 +477,17 @@
     border: none;
     font-size: 22px;
     cursor: pointer;
-    color: var(--ink);
+    color: #E8E6DF;
   }
   .modal-title {
     font-family: var(--display);
     font-size: 20px;
     margin-bottom: 4px;
+    color: #F4F2EA;
   }
   .modal-sub {
     font-size: 14px;
-    color: var(--text-dim);
+    color: #A7AFBC;
     margin-bottom: 18px;
   }
   #contactForm {
@@ -427,10 +499,10 @@
     font-family: var(--body);
     font-size: 15px;
     padding: 10px 12px;
-    border: 1.5px solid rgba(18,33,59,0.25);
+    border: 1.5px solid rgba(232,230,223,0.25);
     border-radius: 3px;
-    background: var(--white);
-    color: var(--ink);
+    background: #11151C;
+    color: #E8E6DF;
     resize: none;
   }
   #contactForm input:focus, #contactForm textarea:focus {
@@ -444,21 +516,33 @@
     font-family: var(--mono);
     font-size: 13px;
   }
-  .modal-success { color: var(--teal); }
-  .modal-error { color: #A5443A; }
+  .modal-success { color: #6F9D91; }
+  .modal-error { color: #D96A5D; }
   .modal-success.show, .modal-error.show { display: block; }
 
   @media (max-width: 760px) {
     #project-list {
       grid-template-columns: 1fr;
     }
-
-    #project-list .project[data-track="java"] {
-      grid-column: auto;
-    }
   }
 
   @media (max-width: 640px) {
+    .nav-actions {
+      gap: 12px;
+    }
+
+    .nav-links {
+      gap: 12px;
+    }
+
+    .theme-text {
+      display: none;
+    }
+
+    .theme-toggle {
+      padding: 7px 9px;
+    }
+
     .skills-grid { grid-template-columns: 1fr; }
     .project { grid-template-columns: 1fr; gap: 10px; }
     header.hero { padding: 70px 0 60px; }
@@ -475,10 +559,17 @@
 <nav>
   <div class="wrap">
     <div class="nav-name">MOHAMED / DEV</div>
-    <div class="nav-links">
-      <a href="#work">Work</a>
-      <a href="#about">About</a>
-      <a href="#contact">Contact</a>
+    <div class="nav-actions">
+      <div class="nav-links">
+        <a href="#work">Work</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+      </div>
+
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle night mode">
+        <span class="theme-icon">☾</span>
+        <span class="theme-text">Night</span>
+      </button>
     </div>
   </div>
 </nav>
@@ -562,6 +653,7 @@
           <div class="preview-link">🔒 <a href="https://lume-mrophqz3.myshopify.com/?pb=0" target="_blank">View live store</a> <span class="pw">— password: oorteu</span></div>
         </div>
       </div>
+      
       <div class="project" data-track="shopify" data-category="design">
         <span class="tag shopify">Shopify</span>
         <div>
@@ -581,6 +673,7 @@
           <div class="preview-link">🔒 <a href="https://dummy-sttor.myshopify.com/" target="_blank">View live store</a> <span class="pw">— password: paiffa</span></div>
         </div>
       </div>
+      
       <div class="project" data-track="shopify" data-category="features">
         <span class="tag shopify">Shopify</span>
         <div>
@@ -590,6 +683,7 @@
           <div class="preview-link">🔒 <a href="https://dummy-sttor.myshopify.com/products/simple-jacket" target="_blank">View live store</a> <span class="pw">— password: paiffa</span></div>
         </div>
       </div>
+      
       <div class="project" data-track="shopify" data-category="features">
         <span class="tag shopify">Shopify</span>
         <div>
@@ -599,6 +693,7 @@
           <div class="preview-link">🔒 <a href="https://dummy-sttor.myshopify.com/" target="_blank">View live store</a> <span class="pw">— password: paiffa</span></div>
         </div>
       </div>
+      
       <div class="project" data-track="shopify" data-category="features">
         <span class="tag shopify">Shopify</span>
         <div>
@@ -608,25 +703,16 @@
           <div class="preview-link">🔒 <a href="https://dummy-sttor.myshopify.com/" target="_blank">View live store</a> <span class="pw">— password: paiffa</span></div>
         </div>
       </div>
+      
       <div class="project" data-track="shopify" data-category="features">
         <span class="tag shopify">Shopify</span>
         <div>
           <h3>Recently Viewed Products</h3>
-          <p class="desc">A recently viewed products feature that automatically remembers products a shopper has browsed and displays them for quick access later —  <span class="demo-note">browse a few product pages first to see the feature populate and track your browsing activity.</span></p>
+          <p class="desc">A recently viewed products feature that automatically remembers products a shopper has browsed and displays them for quick access later — <span class="demo-note">browse a few product pages first to see the feature populate and track your browsing activity.</span></p>
           <div class="stack">Liquid · JavaScript · localStorage · Dynamic product rendering</div>
           <div class="preview-link">🔒 <a href="https://dummy-sttor.myshopify.com/" target="_blank">View live store</a> <span class="pw">— password: paiffa</span></div>
         </div>
       </div>
-
-      <!-- <div class="project" data-track="shopify">
-        <span class="tag shopify">Shopify</span>
-        <div>
-          <h3>Custom Cart Drawer + AJAX Cart Integration</h3>
-          <p class="desc">A slide-out cart drawer wired into Shopify's AJAX Cart API, with a full nav system (search overlay, nav drawer) built around it — items update without a page reload.</p>
-          <div class="stack">Liquid · Shopify AJAX Cart API · JS</div>
-          <div class="preview-link">🔒 <a href="https://your-store-url.myshopify.com" target="_blank">View live store</a> <span class="pw">— password: yourpassword</span></div>
-        </div>
-      </div> -->
 
       <div class="project" data-track="java">
         <span class="tag java">Java / Backend</span>
@@ -690,7 +776,6 @@
 </footer>
 
 <script>
-
   const trackPills = document.querySelectorAll('.filter-main .pill');
   const categoryPills = document.querySelectorAll('.filter-sub .pill');
   const shopifyFilters = document.getElementById('shopifyFilters');
@@ -735,19 +820,35 @@
     });
   });
 
+  /* ---------- MODAL ---------- */
   const modal = document.getElementById('contactModal');
-  document.getElementById('openContactModal').addEventListener('click', () => modal.classList.add('open'));
-  document.getElementById('closeContactModal').addEventListener('click', () => modal.classList.remove('open'));
-  modal.addEventListener('click', (e) => { if (e.target === modal) modal.classList.remove('open'); });
+  
+  document.getElementById('openContactModal').addEventListener('click', () => {
+    modal.classList.add('open');
+  });
+  
+  document.getElementById('closeContactModal').addEventListener('click', () => {
+    modal.classList.remove('open');
+  });
+  
+  modal.addEventListener('click', (e) => { 
+    if (e.target === modal) modal.classList.remove('open'); 
+  });
 
+  /* ---------- FORM SUBMISSION ---------- */
   const form = document.getElementById('contactForm');
   const errorMsg = document.getElementById('modalError');
+  
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     errorMsg.classList.remove('show');
     const data = new FormData(form);
     try {
-      const res = await fetch(form.action, { method: 'POST', body: data, headers: { 'Accept': 'application/json' } });
+      const res = await fetch(form.action, { 
+        method: 'POST', 
+        body: data, 
+        headers: { 'Accept': 'application/json' } 
+      });
       if (res.ok) {
         form.style.display = 'none';
         document.getElementById('modalSuccess').classList.add('show');
@@ -757,6 +858,35 @@
     } catch (err) {
       errorMsg.classList.add('show');
     }
+  });
+
+  /* ---------- NIGHT MODE ---------- */
+  const themeToggle = document.getElementById('themeToggle');
+  const themeIcon = themeToggle.querySelector('.theme-icon');
+  const themeText = themeToggle.querySelector('.theme-text');
+
+  function setTheme(isDark) {
+    document.documentElement.classList.toggle('dark', isDark);
+
+    themeIcon.textContent = isDark ? '☀' : '☾';
+    themeText.textContent = isDark ? 'Day' : 'Night';
+
+    themeToggle.setAttribute(
+      'aria-label',
+      isDark ? 'Switch to day mode' : 'Switch to night mode'
+    );
+
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+  }
+
+  const savedTheme = localStorage.getItem('theme');
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+  setTheme(savedTheme ? savedTheme === 'dark' : prefersDark);
+
+  themeToggle.addEventListener('click', () => {
+    const isDark = !document.documentElement.classList.contains('dark');
+    setTheme(isDark);
   });
 </script>
 
