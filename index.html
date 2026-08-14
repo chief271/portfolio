@@ -319,6 +319,113 @@
     border-color: var(--border);
   }
 
+  /* ---------- CASE STUDY ACCORDION ---------- */
+  .project-case-study {
+    grid-column: 1 / -1;
+  }
+
+  .case-toggle {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--ink);
+    text-align: left;
+    cursor: pointer;
+    font: inherit;
+  }
+
+  .case-toggle h3 {
+    margin-bottom: 4px;
+  }
+
+  .case-meta {
+    display: block;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-dim);
+  }
+
+  .case-icon {
+    flex: 0 0 auto;
+    width: 28px;
+    height: 28px;
+    display: grid;
+    place-items: center;
+    border: 1px solid var(--border-strong);
+    border-radius: 50%;
+    font-family: var(--mono);
+    font-size: 16px;
+    transition: transform 0.25s ease, background-color 0.25s ease, color 0.25s ease;
+  }
+
+  .case-toggle:hover .case-icon {
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  .case-content {
+    display: none;
+    padding-top: 24px;
+  }
+
+  .project-case-study.is-open .case-content {
+    display: block;
+  }
+
+  .project-case-study.is-open .case-icon {
+    transform: rotate(45deg);
+  }
+
+  .feature-list {
+    margin-top: 24px;
+    border-top: 1px solid var(--border);
+  }
+
+  .feature-item {
+    display: grid;
+    grid-template-columns: 42px 1fr;
+    gap: 14px;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .feature-number {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--amber);
+    padding-top: 3px;
+  }
+
+  .feature-item h4 {
+    font-family: var(--display);
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .feature-item p {
+    color: var(--text-dim);
+    font-size: 14px;
+    line-height: 1.55;
+  }
+
+  .feature-note {
+    display: inline-block;
+    margin-top: 8px;
+    padding: 5px 9px;
+    border: 1px solid var(--amber);
+    border-radius: 3px;
+    background: rgba(201,138,62,0.1);
+    color: var(--ink);
+    font-family: var(--mono);
+    font-size: 11px;
+  }
+
   /* ---------- PROJECT CARDS ---------- */
   .project {
     padding: 28px 0;
@@ -549,6 +656,15 @@
     .filter-main,
     .filter-sub { gap: 8px; }
     .pill { padding: 7px 12px; }
+    .case-toggle {
+      align-items: flex-start;
+    }
+
+    .feature-item {
+      grid-template-columns: 34px 1fr;
+      gap: 10px;
+    }
+
   }
 
   :focus-visible { outline: 2px solid var(--amber); outline-offset: 2px; }
@@ -654,63 +770,75 @@
         </div>
       </div>
       
-      <div class="project" data-track="shopify" data-category="design">
+      <div class="project project-case-study" data-track="shopify" data-category="design">
         <span class="tag shopify">Shopify</span>
         <div>
-          <h3>Clothing Store Homepage</h3>
-          <p class="desc">A custom Shopify homepage designed with a strong focus on visual hierarchy, UI/UX principles, and conversion — creating an engaging shopping experience while guiding customers naturally toward key products and actions.</p>
-          <div class="stack">Liquid · UI/UX design · Conversion-focused layout · Theme editor customization · Custom sections</div>
-          <div class="preview-link">🔒 <a href="https://dummy-sttor.myshopify.com/" target="_blank">View live store</a> <span class="pw">— password: paiffa</span></div>
-        </div>
-      </div>
+          <button class="case-toggle" type="button" aria-expanded="false">
+            <span>
+              <h3>Clothing Store — Storefront &amp; Features</h3>
+              <span class="case-meta">Design · UI/UX · Conversion · Interactive features</span>
+            </span>
+            <span class="case-icon">+</span>
+          </button>
 
-      <div class="project" data-track="shopify" data-category="features">
-        <span class="tag shopify">Shopify</span>
-        <div>
-          <h3>"Shop the Look" Section</h3>
-          <p class="desc">A styled lifestyle image with clickable dots that reveal the matching product's title, price, and variants inline — lets merchants build editorial-style merchandising without touching code after setup.</p>
-          <div class="stack">Liquid dynamic blocks · JS panel interaction</div>
-          <div class="preview-link">🔒 <a href="https://dummy-sttor.myshopify.com/" target="_blank">View live store</a> <span class="pw">— password: paiffa</span></div>
-        </div>
-      </div>
-      
-      <div class="project" data-track="shopify" data-category="features">
-        <span class="tag shopify">Shopify</span>
-        <div>
-          <h3>Sticky Add to Cart</h3>
-          <p class="desc">A persistent add-to-cart bar that appears when the main product form leaves the screen, keeping the purchase action accessible while customers browse the product page — reducing the need to scroll back to the product form.</p>
-          <div class="stack">Liquid · JavaScript · Shopify product form · Responsive UI</div>
-          <div class="preview-link">🔒 <a href="https://dummy-sttor.myshopify.com/products/simple-jacket" target="_blank">View live store</a> <span class="pw">— password: paiffa</span></div>
-        </div>
-      </div>
-      
-      <div class="project" data-track="shopify" data-category="features">
-        <span class="tag shopify">Shopify</span>
-        <div>
-          <h3>Quick Add to Cart</h3>
-          <p class="desc">A quick-add interaction that lets shoppers add products directly from collection and product grids without opening the full product page — keeping the shopping flow faster while still handling product variants.</p>
-          <div class="stack">Liquid · JavaScript · Shopify Cart API · Variant handling</div>
-          <div class="preview-link">🔒 <a href="https://dummy-sttor.myshopify.com/" target="_blank">View live store</a> <span class="pw">— password: paiffa</span></div>
-        </div>
-      </div>
-      
-      <div class="project" data-track="shopify" data-category="features">
-        <span class="tag shopify">Shopify</span>
-        <div>
-          <h3>Quick Add + Feedback</h3>
-          <p class="desc">A quick-add interaction that lets shoppers add products directly from collection and product grids, with immediate visual feedback confirming the item was added — keeping the shopping flow fast without forcing customers to leave the page.</p>
-          <div class="stack">Liquid · JavaScript · Shopify Cart API · UI feedback · Variant handling</div>
-          <div class="preview-link">🔒 <a href="https://dummy-sttor.myshopify.com/" target="_blank">View live store</a> <span class="pw">— password: paiffa</span></div>
-        </div>
-      </div>
-      
-      <div class="project" data-track="shopify" data-category="features">
-        <span class="tag shopify">Shopify</span>
-        <div>
-          <h3>Recently Viewed Products</h3>
-          <p class="desc">A recently viewed products feature that automatically remembers products a shopper has browsed and displays them for quick access later — <span class="demo-note">browse a few product pages first to see the feature populate and track your browsing activity.</span></p>
-          <div class="stack">Liquid · JavaScript · localStorage · Dynamic product rendering</div>
-          <div class="preview-link">🔒 <a href="https://dummy-sttor.myshopify.com/" target="_blank">View live store</a> <span class="pw">— password: paiffa</span></div>
+          <div class="case-content">
+            <p class="desc">A custom Shopify storefront designed with a strong focus on visual hierarchy, UI/UX principles, and conversion — with custom shopping features built to make browsing and purchasing more seamless.</p>
+
+            <div class="stack">Liquid · JavaScript · UI/UX design · Conversion-focused layout · Theme editor customization · Shopify Cart API · localStorage</div>
+
+            <div class="feature-list">
+              <div class="feature-item">
+                <span class="feature-number">01</span>
+                <div>
+                  <h4>Email Subscription</h4>
+                  <p>Captures interested visitors through a lightweight email subscription experience, with cookies used to control when the popup is shown again.</p>
+                </div>
+              </div>
+
+              <div class="feature-item">
+                <span class="feature-number">02</span>
+                <div>
+                  <h4>Goal-Oriented Progress Bar</h4>
+                  <p>A dynamic progress indicator designed around a specific shopping goal, giving customers clear visual feedback as they move closer to the target.</p>
+                </div>
+              </div>
+
+              <div class="feature-item">
+                <span class="feature-number">03</span>
+                <div>
+                  <h4>Smart Scroll Up</h4>
+                  <p>A convenient scroll-to-top interaction that lets shoppers quickly return to the top of the page after browsing, making navigation easier on longer pages.</p>
+                </div>
+              </div>
+
+              <div class="feature-item">
+                <span class="feature-number">04</span>
+                <div>
+                  <h4>Sticky Add to Cart</h4>
+                  <p>Keeps the purchase action accessible after the main product form leaves the screen, reducing unnecessary scrolling during product browsing.</p>
+                </div>
+              </div>
+
+              <div class="feature-item">
+                <span class="feature-number">05</span>
+                <div>
+                  <h4>Quick Add + Feedback</h4>
+                  <p>Lets shoppers add products directly from product grids with immediate visual feedback confirming that the action was successful.</p>
+                </div>
+              </div>
+
+              <div class="feature-item">
+                <span class="feature-number">06</span>
+                <div>
+                  <h4>Recently Viewed Products</h4>
+                  <p>Remembers products a shopper has browsed and brings them back later for easier product discovery and comparison.</p>
+                  <span class="feature-note">Browse a few product pages first to see this feature populate.</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="preview-link">🔒 <a href="https://dummy-sttor.myshopify.com/" target="_blank">View live store</a> <span class="pw">— password: paiffa</span></div>
+          </div>
         </div>
       </div>
 
@@ -756,7 +884,10 @@
     <div class="contact-links">
       <button class="btn" id="openContactModal">Message me</button>
       <a class="btn" href="https://www.fiverr.com/s/Q7lAy3p" target="_blank">Fiverr</a>
+      <a class="btn" href="https://www.upwork.com/freelancers/~0116a21a92a3be0bc9?mp_source=share" target="_blank">UpWork</a>
+
     </div>
+    
 
     <div class="modal-overlay" id="contactModal">
       <div class="modal-box">
@@ -817,6 +948,15 @@
       categoryPills.forEach(p => p.classList.remove('active'));
       pill.classList.add('active');
       showProjects('shopify', pill.dataset.category);
+    });
+  });
+
+  /* ---------- SHOPIFY CASE STUDY ACCORDION ---------- */
+  document.querySelectorAll('.case-toggle').forEach(toggle => {
+    toggle.addEventListener('click', () => {
+      const caseStudy = toggle.closest('.project-case-study');
+      const isOpen = caseStudy.classList.toggle('is-open');
+      toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
     });
   });
 
