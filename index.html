@@ -91,6 +91,38 @@
   .nav-links a { opacity: 0.7; transition: opacity 0.2s; }
   .nav-links a:hover { opacity: 1; }
 
+  .nav-link,
+  .pill.has-hotspot {
+    position: relative;
+  }
+
+  .nav-link .hotspot,
+  .pill .hotspot {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--amber);
+    border: 2px solid var(--paper);
+  }
+
+  .nav-link .hotspot::before,
+  .pill .hotspot::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: var(--amber);
+    animation: hotspotPulse 2.2s ease-out infinite;
+  }
+
+  @keyframes hotspotPulse {
+    0% { transform: scale(1); opacity: 0.7; }
+    70%, 100% { transform: scale(3); opacity: 0; }
+  }
+
   .nav-actions {
     display: flex;
     align-items: center;
@@ -686,7 +718,10 @@
     <div class="nav-name">MOHAMED / DEV</div>
     <div class="nav-actions">
       <div class="nav-links">
-        <a href="#work">Work</a>
+        <span class="nav-link">
+          <a href="#work">Work</a>
+          <span class="hotspot" aria-hidden="true"></span>
+        </span>
         <a href="#about">About</a>
         <a href="#contact">Contact</a>
       </div>
@@ -755,7 +790,7 @@
     <div class="filter-wrap">
       <div class="filter-main">
         <button class="pill active" data-track="all">All</button>
-        <button class="pill" data-track="shopify">Shopify</button>
+        <button class="pill has-hotspot" data-track="shopify">Shopify<span class="hotspot" aria-hidden="true"></span></button>
         <button class="pill" data-track="java">Java / Backend</button>
       </div>
 
